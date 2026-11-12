@@ -105,14 +105,14 @@ unique(whoimp$country_name[whoimp$continent == "Europe"])
 GUIDELINES <- data.frame(RA = c(1987, 2010), SLE = c(1997, 2012), SSc = c(1980, 2013), Gout = c(1977, 2015), SpA = c(2005, 2010))[2, ]
 
 # age and sex standardised mortality rates (asSMR) ----
-source("script/1C-ASSMR.R")
+source("script/3___asSMR.R")
 t1_orig <- t1
 # crude SMR ----
-source("script/1-crude-mr.R")
+source("script/3b___SMR.R")
 t1_crude <- t1
 
 # average percent change (APC) to evaluate trends ----
-source("script/3B-ASAPC.R")
+source("script/4___APC.R")
 
 fn <- paste0("res/", paste0(REPR_YEARS, collapse = "-"), "-EPI-WHO-", QUALITY, "-", Sys.Date(), ".xlsx")
 xlsx::write.xlsx(OVERALL %>% as.data.frame(), file = fn, sheetName = "Deaths", showNA = F, append = F, row.names = F)
@@ -123,11 +123,11 @@ xlsx::write.xlsx(t1_orig, file = fn, sheetName = "ASMR x 1 MLN", showNA = F, app
 xlsx::write.xlsx(results, file = fn, sheetName = "Average AAPC", showNA = F, append = T, row.names = F)
 
 # epidemiology analysis on GBD data ----
-source("script/3-epidemiology.R")
+source("script/5___epi.R")
 xlsx::write.xlsx(incidence, file = fn, sheetName = "incidence-APC", showNA = F, append = T, row.names = F)
 xlsx::write.xlsx(prevalence, file = fn, sheetName = "prevalence-APC", showNA = F, append = T, row.names = F)
 
 # ecologic relationship between prevalence, incidence and mortality ----
-source("script/5-ecol.R")
+source("script/6___ecol.R")
 xlsx::write.xlsx(INC.table, file = fn, sheetName = "incidence-asmr-model", showNA = F, append = T, row.names = F)
 xlsx::write.xlsx(PREV.table, file = fn, sheetName = "prevalence-asmr-model", showNA = F, append = T, row.names = F)
